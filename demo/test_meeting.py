@@ -76,6 +76,7 @@ class MeetingTest(unittest.TestCase):
 		for i in range(1, row_len + 1):
 			datetime += driver.get_element('xpath=>//html/body/div[3]/div[2]/div/div/div/div[2]/table/tbody/tr[%d]/td[4]' % i).text.encode('utf-8')
 		self.assertTrue(date in datetime)
+        driver.driver.get_screenshot_as_file('meeting.jpg')
 		
 		driver.quit()
 
