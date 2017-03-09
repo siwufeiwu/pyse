@@ -50,7 +50,21 @@ class MeetingTest(unittest.TestCase):
 		driver.click("class=>ac_interactiveConfirm")
 		sleep(2)
 		
-		#选择会议室
+		#选择上午会议室
+		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[3]/div/dl[1]/dd/ul/li[6]')
+		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[3]/div/dl[1]/dd/ul/li[3]')
+		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[4]/a')
+		sleep(2)
+		driver.click("xpath=>//*[@id='jq-interactive-sprite']/table/tbody/tr[2]/td[2]/div/div[4]/div/dl[4]/dd/div")
+		while not driver.get_display("xpath=>//*[@id='neteaseUser']/div/div[3]/div[2]/div/div[1]/div/div[1]/ul/li[1]/strong"):
+			sleep(2)
+		driver.double_click("xpath=>//*[@id='neteaseUser']/div/div[3]/div[2]/div/div[1]/div/div[1]/ul/li[8]/strong")
+		driver.click("xpath=>//*[@id='jq-interactive-MultiNeteaseUser']/table/tbody/tr[2]/td[2]/div/div[5]/em[1]/a")
+		driver.type("xpath=>//*[@id='jq-interactive-sprite']/table/tbody/tr[2]/td[2]/div/div[4]/div/dl[5]/dd/input", 'Regular meeting')
+		driver.click("xpath=>//*[@id='jq-interactive-sprite']/table/tbody/tr[2]/td[2]/div/div[5]/em[1]/a")
+		sleep(3)
+		
+		#选择下午会议室
 		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[3]/div/dl[2]/dd[1]/ul/li[6]')
 		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[3]/div/dl[2]/dd[1]/ul/li[3]')
 		driver.click('xpath=>//html/body/div[3]/div[2]/div/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[4]/a')
@@ -62,13 +76,14 @@ class MeetingTest(unittest.TestCase):
 		driver.click("xpath=>//*[@id='jq-interactive-MultiNeteaseUser']/table/tbody/tr[2]/td[2]/div/div[5]/em[1]/a")
 		driver.type("xpath=>//*[@id='jq-interactive-sprite']/table/tbody/tr[2]/td[2]/div/div[4]/div/dl[5]/dd/input", 'Regular meeting')
 		driver.click("xpath=>//*[@id='jq-interactive-sprite']/table/tbody/tr[2]/td[2]/div/div[5]/em[1]/a")
-		sleep(2)
+		sleep(3)
 		
 		#验证预定成功
 		self.assertTrue(driver.get_display("class=>mine-booked"))
 		driver.click("xpath=>//html/body/div[3]/div[1]/div[2]/a[2]")
 		sleep(2)
 		self.assertEqual("http://meeting.oa.netease.com/oaMeeting/bjroom.jsp#mine", driver.get_url())
+		driver.driver.get_screenshot_as_file('meeting.jpg')
 		#js =" var str = ''; var arr = document.getElementsByClassName('time-item');for (var i in arr){str += arr[i].innerHTML;}"
 		#print str(driver.js(js))
 		row_len = len(driver.driver.find_elements_by_xpath("//html/body/div[3]/div[2]/div/div/div/div[2]/table/tbody/tr")) 
@@ -76,7 +91,6 @@ class MeetingTest(unittest.TestCase):
 		for i in range(1, row_len + 1):
 			datetime += driver.get_element('xpath=>//html/body/div[3]/div[2]/div/div/div/div[2]/table/tbody/tr[%d]/td[4]' % i).text.encode('utf-8')
 		self.assertTrue(date in datetime)
-        driver.driver.get_screenshot_as_file('meeting.jpg')
 		
 		driver.quit()
 
